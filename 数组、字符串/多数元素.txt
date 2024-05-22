@@ -1,0 +1,55 @@
+超出时间限制
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        for i in range(len(nums)):
+            for j in range(i, len(nums)):
+                if nums[i] > nums[j]:
+                    nums[i], nums[j] = nums[j], nums[i]
+        return nums[len(nums)/2]
+
+
+
+
+寻找数组中的多数元素可以使用更高效的算法，如摩尔投票算法（Boyer-Moore Voting Algorithm），它的时间复杂度为 
+𝑂
+(
+𝑛
+)
+O(n)，空间复杂度为 
+𝑂
+(
+1
+)
+O(1)。以下是该算法的实现步骤：
+
+候选人选择：遍历数组，选择一个候选人，如果当前元素等于候选人，则计数加一，否则减一。当计数为零时，选择当前元素为新的候选人，并将计数重置为一。
+验证候选人：再次遍历数组，验证候选人是否为多数元素（出现次数超过数组长度的一半）。
+
+
+
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # for i in range(len(nums)):
+        #     for j in range(i, len(nums)):
+        #         if nums[i] > nums[j]:
+        #             nums[i], nums[j] = nums[j], nums[i]
+        # return nums[len(nums)/2]
+        
+        elements = []
+        count = []
+        for i in nums:
+            if i not in elements:
+                elements.append(i)
+                count.append(1)
+            else:
+                count[elements.index(i)] += 1
+        
+        return elements[count.index(max(count))]
