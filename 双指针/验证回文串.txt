@@ -1,0 +1,19 @@
+import string
+
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        lower_str = s.lower()
+        punctuation_and_whitespace = set(string.punctuation + ' ')
+        cleaned_str = ''.join(char for char in lower_str if char not in punctuation_and_whitespace)
+
+        if len(s) == 0:
+            return True
+        else:
+            for i in range(len(cleaned_str)//2):
+                if cleaned_str[i] != cleaned_str[len(cleaned_str) - 1 - i]:
+                    return False
+            return True     

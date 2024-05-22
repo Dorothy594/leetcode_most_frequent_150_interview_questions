@@ -1,0 +1,14 @@
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        k = 0
+        flag = float('-inf')
+        for i in range(len(nums)):
+            if nums[i] > flag:
+                nums[k] = nums[i]
+                k += 1
+            flag = nums[i]
+        return k

@@ -1,0 +1,25 @@
+class Solution(object):
+    def isValid(self, s):
+        stack = []
+        count = 0
+        for i in s:
+            if i in '([{':
+                stack.append(i)
+            if i in ')]}':
+                if stack != []:
+                    if i == ')' and stack[-1] == '(':
+                        count += 1
+                        stack.pop()
+                    elif i == ']' and stack[-1] == '[':
+                        count += 1
+                        stack.pop()
+                    elif i == '}' and stack[-1] == '{':
+                        count += 1
+                        stack.pop()
+
+        result1 = (stack == [])
+        result2 = (len(s)%2 == 0)
+        result3 = (count == len(s)/2)
+
+        return (result1 and result2 and result3)
+                

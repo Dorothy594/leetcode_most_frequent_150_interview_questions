@@ -1,0 +1,63 @@
+这个做法超时了
+class Solution(object):
+    def factorial(self, n):
+        if n == 1:
+            return 1
+        return self.factorial(n-1) * n
+    
+    def length(self, num):
+        count = 0
+        while num % 10 == 0:
+            count += 1
+            num /= 10
+        return count
+        
+    def trailingZeroes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 0:
+            return 0
+        else:
+            result = self.factorial(n)
+            if result % 10 != 0:
+                return 0
+            else:
+                final = self.length(result)
+                return final                  
+
+
+计算输入数中包含多少个因子5是计算阶乘结果中尾随零（trailing zeroes）数量的一个有效方法，原因在于阶乘结果中尾随零的形成依赖于因子10的数量，而10可以分解为2和5的乘积。在阶乘中，因子2的数量总是足够的（每个偶数都提供至少一个因子2），所以尾随零的数量实际上由因子5的数量决定。
+
+### 解释：
+
+1. **每个偶数提供因子2**：在计算阶乘时，每两个整数就有一个偶数，因此，因子2是非常充足的。
+
+2. **因子5较为稀少**：相比之下，因子5的出现较为罕见。每隔5个数字才出现一个5作为因子，例如在5, 10, 15, 20...等。
+
+3. **高倍数的5的贡献**：对于更大的数字，比如25、125等，它们不仅贡献一个因子5，还会贡献多个。例如，25=5×5，所以25贡献了两个因子5；125=5×5×5，所以125贡献了三个因子5，依此类推。
+
+### 计算方法：
+
+为了计算一个数\( n \)的阶乘中尾随零的数量，我们可以按以下步骤操作：
+
+- **第一步**：计算\( n \)内有多少个数可以被5整除，即\( \left\lfloor \frac{n}{5} \right\rfloor \)。
+- **第二步**：计算\( n \)内有多少个数可以被\( 5^2 = 25 \)整除，即\( \left\lfloor \frac{n}{25} \right\rfloor \)。
+- **第三步**：继续此过程，计算\( n \)内有多少个数可以被\( 5^3 = 125 \)整除，依此类推。
+
+每一步的结果相加就是\( n \)的阶乘中因子5的总数，也就是尾随零的数量。
+
+这种方法的效率非常高，特别是对于非常大的数，它避免了直接计算阶乘的庞大数字，而是通过简单的除法和加法操作来确定结果。
+
+class Solution(object):        
+    def trailingZeroes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        count = 0
+        while n > 0:
+            n /= 5
+            count += n
+        return count

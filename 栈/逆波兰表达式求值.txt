@@ -1,0 +1,45 @@
+class Solution(object):
+    def evalRPN(self, tokens):
+        """
+        :type tokens: List[str]
+        :rtype: int
+        """
+        stack = []
+        for i in tokens:
+            try:
+                int(i)
+                stack.append(int(i))
+            # if int(i):
+            #     stack.append(i)
+            except ValueError:
+            # else:
+                element1 = stack.pop()
+                element2 = stack.pop()
+                if i == "+":
+                    stack.append(element1 + element2)
+                elif i == '-':
+                    stack.append(element2 - element1)
+                elif i == '*':
+                    stack.append(element1 * element2)
+                elif i == '/':
+                    stack.append(int(float(element2) / element1))
+        return stack[0]
+
+
+
+python 的整数除法是向下取整，而不是向零取整。
+
+python2 的除法 "/" 是整数除法， "-3 / 2 = -2" ；
+python3 的地板除 "//" 是整数除法， "-3 // 2 = -2" ；
+python3 的除法 "/" 是浮点除法， "-3 / 2 = -1.5" ；
+
+作者：负雪明烛
+链接：https://leetcode.cn/problems/evaluate-reverse-polish-notation/solutions/668342/xiang-jie-ni-bo-lan-biao-da-shi-fu-ben-t-sfl6/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+对 Python 的整数除法问题，可以用 int(num1 / float(num2)) 来做，即先用浮点数除法，然后取整。
+
+无论如何，浮点数除法都会得到一个浮点数，比如 "-3 / 2.0 = 1.5" ；
+此时再取整，就会得到整数部分，即 float(-1.5) = -1 。
