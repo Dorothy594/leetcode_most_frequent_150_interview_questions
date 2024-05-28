@@ -1,0 +1,33 @@
+class Solution(object):
+    def canConstruct(self, ransomNote, magazine):
+        """
+        :type ransomNote: str
+        :type magazine: str
+        :rtype: bool
+        """
+        ransomNote_dict = {}
+        magazine_dict = {}
+
+        for i in ransomNote:
+            if ransomNote_dict.has_key(i):
+                ransomNote_dict[i] += 1
+            else:
+                ransomNote_dict[i] = 1
+
+        for j in magazine:
+            if magazine_dict.has_key(j):
+                magazine_dict[j] += 1
+            else:
+                magazine_dict[j] = 1
+
+        mk = magazine_dict.keys()
+        count = 0
+
+        for rk in ransomNote_dict.keys():
+            if (rk in mk) and (ransomNote_dict[rk] <= magazine_dict[rk]):
+                count += 1
+        
+        if count == len(ransomNote_dict):
+            return True
+        else:
+            return False
