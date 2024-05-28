@@ -1,0 +1,54 @@
+class Solution(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        # s_dict = {}
+        # t_dict = {}
+
+        # for i in s:
+        #     if s_dict.has_key(i):
+        #         s_dict[i] += 1
+        #     else:
+        #         s_dict[i] = 1
+        
+        # for j in t:
+        #     if t_dict.has_key(j):
+        #         t_dict[j] += 1
+        #     else:
+        #         t_dict[j] = 1
+
+        # s_val = []
+        # t_val = []
+        # for s_key in s_dict.keys():
+        #     s_val.append(s_dict[s_key])
+        # for t_key in t_dict.keys():
+        #     t_val.append(t_dict[t_key])
+        
+        # if s_val == t_val:
+        #     return True
+        # else:
+        #     return False
+
+        s_to_t = {}
+        for i, j in zip(s,t):
+            if s_to_t.has_key(i):
+                if s_to_t[i] != j:
+                    return False
+            else:
+                s_to_t[i] = j
+        
+        check_dict = {}
+        for key in s_to_t.keys():
+            if check_dict.has_key(s_to_t[key]):
+                check_dict[s_to_t[key]] += 1
+            else:
+                check_dict[s_to_t[key]] = 1
+        
+        for char in check_dict.keys():
+            if check_dict[char] > 1:
+                return False
+
+        return True
