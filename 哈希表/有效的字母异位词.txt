@@ -1,0 +1,40 @@
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        s_dict = {}
+        t_dict = {}
+
+        if len(s) != len(t):
+            return False
+
+        for i in s:
+            if s_dict.has_key(i):
+                s_dict[i] += 1
+            else:
+                s_dict[i] = 1
+        
+        for j in t:
+            if t_dict.has_key(j):
+                t_dict[j] += 1
+            else:
+                t_dict[j] = 1
+        
+        t_key = t_dict.keys()
+        count = 0
+        for s_key in s_dict.keys():
+            if s_key in t_key: 
+                if s_dict[s_key] != t_dict[s_key]:
+                    return False
+                else:
+                    count += 1
+            else:
+                return False
+        
+        if count != len(s_dict):
+            return False
+
+        return True

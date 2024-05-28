@@ -1,0 +1,31 @@
+class Solution(object):
+    def wordPattern(self, pattern, s):
+        """
+        :type pattern: str
+        :type s: str
+        :rtype: bool
+        """
+        pattern_to_s = {}
+        word = s.split()
+
+        if len(pattern) != len(word):
+            return False
+
+        for i, j in zip(pattern, word):
+            if pattern_to_s.has_key(i) and pattern_to_s[i] != j:
+                return False
+            else:
+                pattern_to_s[i] = j
+        
+        check_dict = {}
+        for key in pattern_to_s.keys():
+            if check_dict.has_key(pattern_to_s[key]):
+                check_dict[pattern_to_s[key]] += 1
+            else:
+                check_dict[pattern_to_s[key]] = 1
+        
+        for char in check_dict.keys():
+            if check_dict[char] > 1:
+                return False
+        
+        return True
