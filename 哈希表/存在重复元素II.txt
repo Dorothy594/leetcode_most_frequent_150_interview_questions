@@ -1,0 +1,17 @@
+class Solution(object):
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        nums_dict = {}
+        for index, value in enumerate(nums):
+            if nums_dict.has_key(value):
+                if abs(index - nums_dict[value]) <= k:
+                    return True
+                else:
+                    nums_dict[value] = index
+            else:
+                nums_dict[value] = index
+        return False
