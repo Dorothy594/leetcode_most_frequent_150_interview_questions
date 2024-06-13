@@ -1,0 +1,51 @@
+Method 1:
+class Solution(object):
+    def binary(self, nums, target):
+        left = 0
+        right = len(nums)-1
+
+        while left <= right:
+            mid = (left + right) // 2
+            if target == nums[mid]:
+                return True
+            elif target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return False
+
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        nums = []
+        for i in range(len(matrix)):
+            for j in matrix[i]:
+                nums.append(j)
+        
+        return self.binary(nums, target)
+
+
+Method 2:
+class Solution(object):
+    def binary(self, nums, target):
+        left = 0
+        right = len(nums)-1
+
+        while left <= right:
+            mid = (left + right) // 2
+            if target == nums[mid]:
+                return True
+            elif target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        return False
+
+    def searchMatrix(self, matrix, target):
+        for i in range(len(matrix)):
+            if target <= matrix[i][-1] and target >= matrix[i][0]:
+                return self.binary(matrix[i], target)
+        return False
