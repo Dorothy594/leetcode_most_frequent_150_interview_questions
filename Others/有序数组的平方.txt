@@ -1,0 +1,52 @@
+超时：
+class Solution(object):
+    def sortedSquares(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        for i in range(len(nums)):
+            nums[i] *= nums[i]
+        
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                if nums[i] < nums[j]:
+                    nums[i], nums[j] = nums[j], nums[i]
+        
+        return nums
+
+
+pass:
+class Solution(object):
+    def sortedSquares(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        # for i in range(len(nums)):
+        #     nums[i] *= nums[i]
+        
+        # for i in range(len(nums)):
+        #     for j in range(len(nums)):
+        #         if nums[i] < nums[j]:
+        #             nums[i], nums[j] = nums[j], nums[i]
+        
+        # return nums
+
+        left, right = 0, len(nums)-1
+        result = [0] * len(nums)
+        index = len(nums) - 1
+
+        while left <= right:
+            leftSquare = nums[left] * nums[left]
+            rightSquare = nums[right] * nums[right]
+
+            if leftSquare > rightSquare:
+                result[index] = leftSquare
+                left += 1
+            else:
+                result[index] = rightSquare
+                right -= 1
+            index -= 1
+        
+        return result
