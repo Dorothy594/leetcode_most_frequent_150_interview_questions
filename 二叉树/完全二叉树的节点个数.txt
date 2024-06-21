@@ -1,0 +1,51 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    # def isCompleteBinaryTree(self, node):
+    #     if node.left and node.right:
+    #         self.num += 1
+    #         self.isCompleteBinaryTree(node.left)
+    #         self.isCompleteBinaryTree(node.right)
+    #     elif not node.left and not node.right:
+    #         self.num += 1
+    #     else:
+    #         if node.left:
+    #             self.isCompleteBinaryTree(node.left)
+    #         elif node.right:
+    #             self.isCompleteBinaryTree(node.right)
+    #     return self.num
+
+    def preorder(self, node, record):
+        if not node:
+            return record.append(None)
+        else:
+            record.append(node.val)
+            self.preorder(node.left, record)
+            self.preorder(node.right, record)
+                
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+    #     if not root:
+    #         return 0
+        
+    #     self.num = 0
+    #     result = self.isCompleteBinaryTree(root)
+    #     return result
+
+        if not root:
+            return 0
+        
+        record = []
+        self.preorder(root, record)
+        count = 0
+        for i in record:
+            if i is not None:
+                count += 1
+        return count
