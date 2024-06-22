@@ -1,0 +1,86 @@
+迭代：
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def buildTree(self, inorder, postorder):
+        """
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
+        """
+        if not postorder:
+            return None
+            
+        root = TreeNode(postorder[-1])
+        stack = [root]
+        index = len(postorder) - 1
+        for i in range(len(postorder)-2, -1, -1):
+            postorderVal = postorder[i]
+            node = stack[-1]
+            if node.val != inorder[index]:
+                node.right = TreeNode(postorderVal)
+                stack.append(node.right)
+            else:
+                while stack and stack[-1].val == inorder[index]:
+                    node = stack.pop()
+                    index -= 1
+                node.left = TreeNode(postorderVal)
+                stack.append(node.left)
+        
+        return root
+
+
+递归：
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def myBuildTree(self, postorder, inorder_left, inorder_right, index):
+        if inorder_left > inorder_right:
+            return None
+        
+        inorder_root = index[postorder[-1]]
+        root = TreeNode(postorder.pop())
+
+        root.right = self.myBuildTree(postorder, inorder_root + 1, inorder_right, index)
+        root.left = self.myBuildTree(postorder, inorder_left, inorder_root - 1, index)
+
+        return root
+
+    def buildTree(self, inorder, postorder):
+        """
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
+        """
+        # if not postorder:
+        #     return None
+            
+        # root = TreeNode(postorder[-1])
+        # stack = [root]
+        # index = len(postorder) - 1
+        # for i in range(len(postorder)-2, -1, -1):
+        #     postorderVal = postorder[i]
+        #     node = stack[-1]
+        #     if node.val != inorder[index]:
+        #         node.right = TreeNode(postorderVal)
+        #         stack.append(node.right)
+        #     else:
+        #         while stack and stack[-1].val == inorder[index]:
+        #             node = stack.pop()
+        #             index -= 1
+        #         node.left = TreeNode(postorderVal)
+        #         stack.append(node.left)
+        
+        # return root
+
+        n = len(postorder)
+        index = {element: i for i, element in enumerate(inorder)}
+        return self.myBuildTree(postorder, 0, n-1, index)
