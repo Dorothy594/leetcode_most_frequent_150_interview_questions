@@ -1,0 +1,160 @@
+迭代器（英语：iterator），是使用户可在容器对象（container，例如链表或数组）上遍访的对象[1][2][3]，设计人员使用此接口无需关心容器对象的内存分配的实现细节。其行为很像数据库技术中的光标（cursor），迭代器最早出现在1974年设计的CLU编程语言中。
+
+在各种语言实现迭代器的方式皆不尽同，有些面向对象语言像Java、C#、Ruby、Python、Delphi都已将迭代器的特性内置语言当中，完美的跟语言集成，我们称之隐式迭代器。但像是C++语言本身就没有迭代器的特色，但STL仍利用模板实现了功能强大的迭代器。STL容器的数据的内存地址可能会重新分配（reallocate），与容器绑定的迭代器仍然可以定位到重新分配后的正确的内存地址。
+
+描述
+内部迭代器
+内部的迭代器是高阶函数（通常接受匿名函数），比如map、 reduce等，它实现跨经一个容器的遍历，依次将给定函数应用到每个元素。
+
+外部迭代器和迭代器模式
+主条目：迭代器模式
+外部的迭代器可以被认为是某种类型的指针，它有两个主要操作：引用在一个对象搜集（collection）中的一个特定元素（称为元素访问），和修改自身使其指向下一个元素（称为元素遍历）[4]。还必须有一种方式建立迭代器并指向容器的第一个元素，还要有某种方式确定何时迭代器已经穷尽了容器中所有的元素。依据语言和意向用途，迭代器还可以提供额外的操作或展示不同的行为。
+
+迭代器的主要用途是允许用户处理一个容器的所有元素，而将用户隔离于容器的内部结构[2]。这允许容器以任何它希望的方式存储元素，而允许用户把它们看作就是简单的序列或列表。迭代器类通常设计为紧密协作于对应的容器类。容器类通常提供建立迭代器的方法。
+
+循环计数器有时也被称为循环迭代器。但是循环计数器只提供遍历功能而不提供访问功能。
+
+生成器
+主条目：生成器 (计算机编程)
+实现迭代器的一种方式是使用受限形式的协程，也叫做生成器。不同于子例程，生成器协程可以向它的调用者多次产生返回值，而非只是返回一次。多数迭代器可自然的表达为生成器，但是因为生成器在被多次启用之间保存了自己的局部状态，它们特别适合于复杂的、有状态的迭代器，比如树遍历器。在不同的作者和语言之间，术语“生成器”和“迭代器”的用法上有微妙的差异和区别[5]。有些语言将二者视为同一接口，有些语言如JavaScript[6]则将之独立化。在Python中，生成器是一个迭代器构造器，即返回一个迭代器的函数。下面的Python生成器返回一个斐波那契数列的迭代器，使用到了Python的yield语句：
+
+def fibonacci(limit):
+    a, b = 0, 1
+    for _ in range(limit):
+        yield a
+        a, b = b, a+b
+
+for number in fibonacci(100):  # 这个生成器构造了一个迭代器
+    print(number)
+隐式迭代器
+一些面向对象语言比如C#、C++（后期版本）、 Delphi（后期版本）、Go、Java（后期版本）、Lua、Perl、Python、Ruby，提供了迭代一个容器对象的元素的内置方式，而不用介入一个显式的迭代器对象。实际的迭代器对象可以在现实中存在，即便如此，它也不被暴露在这个语言的源代码中[4][7]。
+
+隐式迭代器经常通过foreach语句（或等价者）来显现出来，比如下面的Python例子：
+
+for value in iterable:
+    print(value)
+在Python中，可迭代者（iterable）是可以被转换成迭代器的一个对象，接着在这个for循环期间从头至尾迭代它，这是隐含完成的。
+
+在Smalltalk家族语言和受其启发的语言中，它们可以由搜集（collection）对象自身建立。比如下面Ruby例子：
+
+iterable.each do |value|
+  puts value
+end
+这种迭代风格有时叫做“内部迭代”，因为它的代码完全执行在可迭代对象的上下文（context）之内（它控制迭代的所有方面），而编程者只提供在每个步骤要执行的运算操作（使用匿名函数）。
+
+支持列表推导式或类似构造的语言，还可以在结果列表的构造期间使用隐式迭代器，比如在Python中：
+
+names = [person.name for person in roster if person.male]
+有时隐式迭代只能做到部分的隐藏实质。C++语言有一些用于隐式迭代的函数模板，比如for_each()。这些函数仍要求显式的迭代器对象作为它们的初始输入，但是后续的迭代不将迭代器对象暴露给用户。
+
+流
+更多信息：字符串流
+迭代器是对输入流的一种有用的抽象，流提供了潜在的无限可迭代的（但不必然可索引）的对象。一些语言，比如Perl和Python，将流实现为迭代器。流的可替代的实现包括数据驱动语言，比如AWK和sed。
+
+迭代器分类
+迭代器范畴
+迭代器可以依据功能而归类，下面是迭代器范畴的一个（不完全）列表[8][9]:
+
+范畴	语言
+双向迭代器	C++
+前向迭代器	C++
+输入迭代器	C++
+输出迭代器	C++
+随机访问迭代器	C++
+Trivial迭代器	C++ (旧STL)[10]
+迭代器类型
+不同的语言或它们所具有的函数库定义了自己的迭代器的类型，下面是一个（不完全）列表[11]：
+
+类型	语言
+数组迭代器	PHP, R[12]
+缓存迭代器	PHP
+常量迭代器	C++,[13] PHP
+目录迭代器	PHP, Python
+过滤器迭代器	PHP, R
+Limit迭代器	PHP
+列表迭代器	Java,[7] R
+递归数组迭代器	PHP
+XML迭代器	PHP
+语言示例
+C#
+在C#中，一种新形式的迭代器提供了函数语言程序设计中的生成器，使用yield return
+
+类似于Python中使用的yield
+
+// Method that takes an iterable input (possibly an array)
+// and returns all even numbers.
+public static IEnumerable<int> GetEven(IEnumerable<int> numbers)
+{
+    foreach(int i in numbers)
+    {
+        if (i % 2 == 0) yield return i;
+    }
+}
+C++
+C++的STL可支持迭代器。
+
+ template<typename InputIterator>
+ void printall(InputIterator first, InputIterator last)
+ {
+     for(; first != last; ++first)
+     {
+         std::cout << *first << std::endl;
+     }
+ }
+Java
+Java JDK 1.2 版开始支持迭代器。每一个迭代器提供next()以及hasNext()方法，同时也支持remove()。
+
+Iterator iter = list.iterator();
+//Iterator<MyType> iter = list.iterator();    in J2SE 5.0
+while (iter.hasNext())
+    System.out.println(iter.next());
+Python
+在Python中，迭代器是语言的基础部分，而在很多情况下是不可见的，因为它们隐含的用在了for（foreach）语句、列表推导式和生成器表达式之中。Python标准内置的所有搜集类型都支持迭代，还有很多支持它的类也是标准库的一部分。下面的例子展示典型的在序列（如列表、元组、字典、集合等）上的隐式迭代：
+
+for value in sequence:
+    print(value)
+Python字典（某种形式的关联数组），在字典返回了键（key）的时候，可以直接在其上进行迭代：
+
+for key in dictionary:
+    value = dictionary[key]
+    print(key, value)
+或者在字典items方法产生元组形式的对应键-值对的时候，在其上进行迭代：
+
+for key, value in dictionary.items():
+    print(key, value)
+但是迭代器也可以被显式的使用和定义。对于一个可迭代的序列类型或类，内置的函数iter()可用来建立一个迭代对象。接着可以通过next()函数对这个迭代对象进行迭代；这个函数在内部使用__next__()方法，它返回这个容器中的下一个元素。（前面的叙述适用于Python 3.x，在Python 2.x中要使用等价的next()方法。）当没有元素剩余的时候，引发StopIteration异常。下面的例子展示与前例等价的使用显式迭代器的在序列上的迭代：
+
+it = iter(sequence)
+while True:
+    try:
+        #value = it.next() # in Python 2.x
+        value = next(it) # in Python 3.x
+    except StopIteration:
+        break
+    print(value)
+任何用户定义的类都可以通过定义返回迭代器对象的__iter__()方法，支持标准迭代（无论隐式还是显式）。接着迭代器对象需要定义返回下一个元素的__next__()方法。
+
+Python生成器实现了这个迭代协议。
+
+Ruby
+Ruby程序员可以用yield关键字定义迭代器，又将迭代器和生成器分开。
+
+0..42.each do |n|
+ puts n
+end
+...以及...
+
+for n in 0..42
+ puts n
+end
+Rust
+使用Rust可以对向量的元素进行迭代，或者创建自己的迭代器。 每个迭代器都有适配器(map，filter，skip，take……)。
+
+for n in 0..42 {
+    println!("{}", n);
+}
+fibonacci()下面是一个自定义迭代器。
+
+for i in fibonacci().skip(4).take(4) {
+    println!("{}", i);
+}
